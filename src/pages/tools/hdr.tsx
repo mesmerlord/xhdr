@@ -1,5 +1,17 @@
-import { useState, useCallback, useRef, useEffect } from "react";
-import { Upload, Download, Sparkles, X, Move, ArrowDown, ChevronRight } from "lucide-react";
+import { useState, useCallback, useRef } from "react";
+import {
+  Upload,
+  Download,
+  Sparkles,
+  X,
+  Heart,
+  MessageCircle,
+  Repeat2,
+  Share,
+  MoreHorizontal,
+  ArrowDown,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
@@ -10,115 +22,105 @@ import { cn } from "@/lib/utils";
 
 const HDR_LEVELS = 9; // 0-8
 
-// Twitter Profile Header Mockup Component
-function TwitterProfileMockup({
-  profileImage,
+// Twitter Post Mockup Component
+function TwitterPostMockup({
+  postImage,
   hdrLevel,
   compact = false,
 }: {
-  profileImage: string | null;
+  postImage: string | null;
   hdrLevel: number;
   compact?: boolean;
 }) {
-  const displayImage = profileImage || `/hero-hdr-${hdrLevel}.png`;
+  const displayImage = postImage || `/hero-hdr-${hdrLevel}.png`;
 
   return (
     <div className={cn(
       "bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-200",
-      compact && "scale-95 origin-top"
+      compact && "scale-[0.97] origin-top"
     )}>
-      {/* Banner */}
+      {/* Post header */}
       <div className={cn(
-        "bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600 relative",
-        compact ? "h-20" : "h-24 sm:h-32"
-      )} />
-
-      {/* Profile section */}
-      <div className={cn("px-3 sm:px-4 pb-3 sm:pb-4", compact && "px-3 pb-3")}>
-        {/* Profile picture - overlapping banner */}
+        "flex items-start gap-2 sm:gap-3",
+        compact ? "p-3" : "p-3 sm:p-4"
+      )}>
         <div className={cn(
-          "relative mb-2 sm:mb-3",
-          compact ? "-mt-10" : "-mt-12 sm:-mt-16"
-        )}>
+          "rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex-shrink-0",
+          compact ? "w-8 h-8" : "w-9 h-9 sm:w-10 sm:h-10"
+        )} />
+        <div className="flex-1 min-w-0">
           <div className={cn(
-            "rounded-full border-4 border-white overflow-hidden bg-gray-200 shadow-lg",
-            compact ? "w-20 h-20" : "w-24 h-24 sm:w-32 sm:h-32"
+            "flex items-center gap-1 flex-wrap",
+            compact ? "text-xs" : "text-xs sm:text-sm"
           )}>
-            <img
-              src={displayImage}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
+            <span className="font-bold text-gray-900">Your Name</span>
+            <span className="text-gray-500">@username</span>
+            <span className="text-gray-400">·</span>
+            <span className="text-gray-500">2h</span>
           </div>
-        </div>
-
-        {/* Profile info */}
-        <div className="flex justify-between items-start gap-2">
-          <div className="min-w-0">
-            <h3 className={cn(
-              "font-bold text-gray-900 truncate",
-              compact ? "text-base" : "text-lg sm:text-xl"
-            )}>Your Name</h3>
-            <p className={cn(
-              "text-gray-500",
-              compact ? "text-xs" : "text-sm"
-            )}>@username</p>
-          </div>
-          <button className={cn(
-            "bg-gray-900 text-white rounded-full font-semibold whitespace-nowrap flex-shrink-0",
-            compact ? "px-3 py-1 text-xs" : "px-3 sm:px-4 py-1.5 text-xs sm:text-sm"
+          <p className={cn(
+            "text-gray-900 mt-0.5 sm:mt-1",
+            compact ? "text-xs" : "text-xs sm:text-sm"
           )}>
-            Edit profile
-          </button>
-        </div>
-
-        {/* Bio - hide on compact */}
-        {!compact && (
-          <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-sm line-clamp-2">
-            Your bio goes here. This is how your HDR profile picture will look on Twitter/X.
+            Check out this HDR photo! It looks amazing on HDR screens.
           </p>
-        )}
-
-        {/* Stats */}
-        <div className={cn(
-          "flex gap-3 sm:gap-4 text-xs sm:text-sm",
-          compact ? "mt-2" : "mt-2 sm:mt-3"
-        )}>
-          <span>
-            <strong className="text-gray-900">123</strong>{" "}
-            <span className="text-gray-500">Following</span>
-          </span>
-          <span>
-            <strong className="text-gray-900">456</strong>{" "}
-            <span className="text-gray-500">Followers</span>
-          </span>
         </div>
+        <button className="text-gray-400 hover:text-gray-600 flex-shrink-0">
+          <MoreHorizontal className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")} />
+        </button>
+      </div>
+
+      {/* Post image */}
+      <div className={cn(
+        "pb-2 sm:pb-3",
+        compact ? "px-3" : "px-3 sm:px-4"
+      )}>
+        <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200">
+          <img
+            src={displayImage}
+            alt="Post"
+            className="w-full object-cover"
+            style={{ maxHeight: compact ? "250px" : "350px" }}
+          />
+        </div>
+      </div>
+
+      {/* Post actions */}
+      <div className={cn(
+        "flex justify-between text-gray-500",
+        compact ? "px-3 pb-3 text-xs" : "px-3 sm:px-4 pb-3 sm:pb-4 text-xs sm:text-sm"
+      )}>
+        <button className="flex items-center gap-1 sm:gap-2 hover:text-blue-500 transition-colors">
+          <MessageCircle className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")} />
+          <span>24</span>
+        </button>
+        <button className="flex items-center gap-1 sm:gap-2 hover:text-green-500 transition-colors">
+          <Repeat2 className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")} />
+          <span>12</span>
+        </button>
+        <button className="flex items-center gap-1 sm:gap-2 hover:text-pink-500 transition-colors">
+          <Heart className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")} />
+          <span>486</span>
+        </button>
+        <button className="flex items-center gap-1 sm:gap-2 hover:text-blue-500 transition-colors">
+          <Share className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")} />
+        </button>
       </div>
     </div>
   );
 }
 
-export default function TwitterHDRGenerator() {
+export default function HDRGenerator() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
-  const [imageSize, setImageSize] = useState<{
-    width: number;
-    height: number;
-  } | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const uploadSectionRef = useRef<HTMLDivElement>(null);
-  const imageContainerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
 
   // HDR preview slider for hero
   const [heroHdrLevel, setHeroHdrLevel] = useState(0);
-
-  // Crop position as percentage (0-1) along the axis that needs cropping
-  const [cropOffset, setCropOffset] = useState(0.5);
-  const [isCropDragging, setIsCropDragging] = useState(false);
 
   // HDR settings
   const [hdrIntensity, setHdrIntensity] = useState(1.5);
@@ -127,19 +129,6 @@ export default function TwitterHDRGenerator() {
   const scrollToUpload = () => {
     uploadSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  // Load image dimensions when image changes
-  useEffect(() => {
-    if (originalImage) {
-      const img = new Image();
-      img.onload = () => {
-        setImageSize({ width: img.width, height: img.height });
-      };
-      img.src = originalImage;
-    } else {
-      setImageSize(null);
-    }
-  }, [originalImage]);
 
   const handleFileSelect = useCallback((file: File) => {
     if (!file.type.startsWith("image/")) {
@@ -157,7 +146,6 @@ export default function TwitterHDRGenerator() {
     reader.onload = (e) => {
       setOriginalImage(e.target?.result as string);
       setProcessedImage(null);
-      setCropOffset(0.5);
     };
     reader.readAsDataURL(file);
   }, []);
@@ -182,63 +170,6 @@ export default function TwitterHDRGenerator() {
     setIsDragging(false);
   }, []);
 
-  // Handle crop dragging
-  const handleCropMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsCropDragging(true);
-  }, []);
-
-  const handleCropMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (!isCropDragging || !imageRef.current || !imageSize) return;
-
-      const rect = imageRef.current.getBoundingClientRect();
-      const isWideImg = imageSize.width > imageSize.height;
-
-      if (isWideImg) {
-        const x = e.clientX - rect.left;
-        const maxOffset = rect.width - rect.height;
-        if (maxOffset > 0) {
-          const offset = Math.max(0, Math.min(1, x / rect.width));
-          const cropBoxRatio = rect.height / rect.width;
-          const maxCropOffset = 1 - cropBoxRatio;
-          setCropOffset(
-            Math.max(0, Math.min(maxCropOffset, offset - cropBoxRatio / 2)) /
-              maxCropOffset
-          );
-        }
-      } else {
-        const y = e.clientY - rect.top;
-        const maxOffset = rect.height - rect.width;
-        if (maxOffset > 0) {
-          const offset = Math.max(0, Math.min(1, y / rect.height));
-          const cropBoxRatio = rect.width / rect.height;
-          const maxCropOffset = 1 - cropBoxRatio;
-          setCropOffset(
-            Math.max(0, Math.min(maxCropOffset, offset - cropBoxRatio / 2)) /
-              maxCropOffset
-          );
-        }
-      }
-    },
-    [isCropDragging, imageSize]
-  );
-
-  const handleCropMouseUp = useCallback(() => {
-    setIsCropDragging(false);
-  }, []);
-
-  useEffect(() => {
-    if (isCropDragging) {
-      window.addEventListener("mousemove", handleCropMouseMove);
-      window.addEventListener("mouseup", handleCropMouseUp);
-      return () => {
-        window.removeEventListener("mousemove", handleCropMouseMove);
-        window.removeEventListener("mouseup", handleCropMouseUp);
-      };
-    }
-  }, [isCropDragging, handleCropMouseMove, handleCropMouseUp]);
-
   const processImage = async () => {
     if (!originalImage) return;
 
@@ -246,7 +177,7 @@ export default function TwitterHDRGenerator() {
     setError(null);
 
     try {
-      const response = await fetch("/api/tools/twitter-hdr", {
+      const response = await fetch("/api/tools/hdr", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -254,7 +185,6 @@ export default function TwitterHDRGenerator() {
           settings: {
             hdrIntensity,
             gamma,
-            cropOffset,
           },
         }),
       });
@@ -278,7 +208,7 @@ export default function TwitterHDRGenerator() {
 
     const link = document.createElement("a");
     link.href = processedImage;
-    link.download = "twitter-hdr-profile.png";
+    link.download = "hdr-image.png";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -286,125 +216,20 @@ export default function TwitterHDRGenerator() {
 
   const resetAll = () => {
     setOriginalImage(null);
-    setImageSize(null);
     setProcessedImage(null);
     setError(null);
     setHdrIntensity(1.5);
     setGamma(0.4);
-    setCropOffset(0.5);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
-    }
-  };
-
-  const needsCropping = imageSize && imageSize.width !== imageSize.height;
-  const isWide = imageSize && imageSize.width > imageSize.height;
-
-  const getCropBoxStyle = (): React.CSSProperties => {
-    if (!imageSize || !needsCropping) return {};
-
-    const aspectRatio = isWide
-      ? imageSize.height / imageSize.width
-      : imageSize.width / imageSize.height;
-
-    if (isWide) {
-      const maxOffset = 1 - aspectRatio;
-      const leftPercent = cropOffset * maxOffset * 100;
-      return {
-        position: "absolute",
-        left: `${leftPercent}%`,
-        top: 0,
-        width: `${aspectRatio * 100}%`,
-        height: "100%",
-        border: "3px solid #f97316",
-        borderRadius: "8px",
-        boxSizing: "border-box",
-        cursor: "move",
-        backgroundColor: "rgba(249, 115, 22, 0.1)",
-      };
-    } else {
-      const maxOffset = 1 - aspectRatio;
-      const topPercent = cropOffset * maxOffset * 100;
-      return {
-        position: "absolute",
-        left: 0,
-        top: `${topPercent}%`,
-        width: "100%",
-        height: `${aspectRatio * 100}%`,
-        border: "3px solid #f97316",
-        borderRadius: "8px",
-        boxSizing: "border-box",
-        cursor: "move",
-        backgroundColor: "rgba(249, 115, 22, 0.1)",
-      };
-    }
-  };
-
-  const getOverlayStyle = (
-    position: "before" | "after"
-  ): React.CSSProperties => {
-    if (!imageSize || !needsCropping) return { display: "none" };
-
-    const aspectRatio = isWide
-      ? imageSize.height / imageSize.width
-      : imageSize.width / imageSize.height;
-
-    const maxOffset = 1 - aspectRatio;
-    const offset = cropOffset * maxOffset;
-
-    if (isWide) {
-      if (position === "before") {
-        return {
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: `${offset * 100}%`,
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          pointerEvents: "none",
-        };
-      } else {
-        return {
-          position: "absolute",
-          left: `${(offset + aspectRatio) * 100}%`,
-          top: 0,
-          width: `${(1 - offset - aspectRatio) * 100}%`,
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          pointerEvents: "none",
-        };
-      }
-    } else {
-      if (position === "before") {
-        return {
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: "100%",
-          height: `${offset * 100}%`,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          pointerEvents: "none",
-        };
-      } else {
-        return {
-          position: "absolute",
-          left: 0,
-          top: `${(offset + aspectRatio) * 100}%`,
-          width: "100%",
-          height: `${(1 - offset - aspectRatio) * 100}%`,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          pointerEvents: "none",
-        };
-      }
     }
   };
 
   return (
     <>
       <Seo
-        title="HDR Profile Picture Generator for Twitter/X"
-        description="Make your Twitter profile picture glow on HDR screens. Creates eye-catching profile photos that stand out in the feed."
-        image="/xhdr-og.png"
+        title="HDR Photo Generator for Twitter/X Posts"
+        description="Make your Twitter photos glow on HDR screens. Create eye-catching posts that stand out in the feed."
       />
 
       <HDRNavbar />
@@ -414,8 +239,8 @@ export default function TwitterHDRGenerator() {
         <section className="relative overflow-hidden">
           {/* Background glow effects */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
           </div>
 
           <div className="container mx-auto px-4 py-8 sm:py-10 lg:py-12 relative">
@@ -423,28 +248,28 @@ export default function TwitterHDRGenerator() {
               <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center">
                 {/* Left - Text Content */}
                 <div className="text-center lg:text-left order-2 lg:order-1">
-                  <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-400 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                  <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-4">
                     <Sparkles className="w-4 h-4" />
-                    Profile Picture HDR
+                    Photo HDR
                   </div>
 
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-                    Make Your Profile{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">
-                      Glow
+                    Make Your Posts{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                      Shine
                     </span>
                   </h1>
 
                   <p className="text-base sm:text-lg text-gray-300 mb-6 max-w-xl mx-auto lg:mx-0">
-                    Create a profile picture that literally glows on HDR screens.
-                    Stand out from everyone else in the feed.
+                    Add HDR effects to any photo. Your images will glow brighter
+                    than regular photos on HDR displays.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
                     <Button
                       onClick={scrollToUpload}
                       size="lg"
-                      className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-8 py-5 sm:px-12 sm:py-6 lg:px-14 lg:py-7 text-lg sm:text-xl rounded-xl shadow-lg shadow-orange-500/25 font-semibold"
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-5 sm:px-12 sm:py-6 lg:px-14 lg:py-7 text-lg sm:text-xl rounded-xl shadow-lg shadow-blue-500/25 font-semibold"
                     >
                       <Upload className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                       Upload Your Photo
@@ -454,7 +279,7 @@ export default function TwitterHDRGenerator() {
 
                   {/* Feature pills */}
                   <div className="hidden sm:flex flex-wrap gap-2 justify-center lg:justify-start">
-                    {["Works on iPhone", "Mac & iPad", "Dark mode ready"].map((feature) => (
+                    {["Original size kept", "Works on iPhone", "Instant download"].map((feature) => (
                       <span
                         key={feature}
                         className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-sm text-gray-400"
@@ -469,21 +294,17 @@ export default function TwitterHDRGenerator() {
                 <div className="order-1 lg:order-2">
                   <div className="relative max-w-sm mx-auto">
                     {/* Glow effect behind card */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 to-pink-500/30 blur-2xl scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 blur-2xl scale-110" />
 
                     <div className="relative">
-                      <TwitterProfileMockup
-                        profileImage={null}
-                        hdrLevel={heroHdrLevel}
-                        compact
-                      />
+                      <TwitterPostMockup postImage={null} hdrLevel={heroHdrLevel} compact />
 
                       {/* Slider below mockup */}
                       <div className="mt-4 px-2">
                         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3">
                           <div className="flex justify-between text-xs text-gray-400 mb-2">
                             <span>Normal</span>
-                            <span className="text-orange-400 font-medium">
+                            <span className="text-blue-400 font-medium">
                               {heroHdrLevel === 0 ? "No HDR" : `Level ${heroHdrLevel}`}
                             </span>
                             <span>Max</span>
@@ -494,7 +315,7 @@ export default function TwitterHDRGenerator() {
                             min={0}
                             max={HDR_LEVELS - 1}
                             step={1}
-                            className="[&_[role=slider]]:bg-orange-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-white [&_[role=slider]]:shadow-lg"
+                            className="[&_[role=slider]]:bg-blue-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-white [&_[role=slider]]:shadow-lg"
                           />
                           <p className="text-center text-xs text-gray-500 mt-2">
                             Drag to preview HDR effect
@@ -519,10 +340,10 @@ export default function TwitterHDRGenerator() {
               {/* Section header */}
               <div className="text-center mb-8 sm:mb-10">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-                  Create Your HDR Profile Picture
+                  Create Your HDR Photo
                 </h2>
                 <p className="text-gray-400">
-                  Upload your photo and we&apos;ll add the HDR magic
+                  Upload any photo and we&apos;ll add the HDR magic
                 </p>
               </div>
 
@@ -534,10 +355,10 @@ export default function TwitterHDRGenerator() {
                     className={cn(
                       "border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center transition-all cursor-pointer backdrop-blur-sm",
                       isDragging
-                        ? "border-orange-500 bg-orange-500/20"
+                        ? "border-blue-500 bg-blue-500/20"
                         : originalImage
                           ? "border-green-500/50 bg-green-500/10"
-                          : "border-gray-700 hover:border-orange-500/50 hover:bg-white/5 bg-gray-800/50"
+                          : "border-gray-700 hover:border-blue-500/50 hover:bg-white/5 bg-gray-800/50"
                     )}
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
@@ -556,32 +377,12 @@ export default function TwitterHDRGenerator() {
                     />
                     {originalImage ? (
                       <div className="space-y-4">
-                        <div
-                          ref={imageContainerRef}
-                          className="relative inline-block select-none"
-                        >
+                        <div className="relative inline-block">
                           <img
-                            ref={imageRef}
                             src={originalImage}
                             alt="Original"
                             className="max-h-56 sm:max-h-64 rounded-xl mx-auto shadow-lg"
-                            draggable={false}
                           />
-                          {needsCropping && (
-                            <>
-                              <div style={getOverlayStyle("before")} />
-                              <div style={getOverlayStyle("after")} />
-                              <div
-                                style={getCropBoxStyle()}
-                                onMouseDown={handleCropMouseDown}
-                                className="flex items-center justify-center"
-                              >
-                                <div className="bg-white/90 rounded-full p-2 shadow-lg">
-                                  <Move className="w-5 h-5 text-orange-600" />
-                                </div>
-                              </div>
-                            </>
-                          )}
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -592,22 +393,11 @@ export default function TwitterHDRGenerator() {
                             <X className="w-4 h-4" />
                           </button>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-sm text-gray-400">
-                            {imageSize &&
-                              `${imageSize.width} × ${imageSize.height}px`}
-                          </p>
-                          {needsCropping && (
-                            <p className="text-xs text-orange-400 font-medium">
-                              Drag the box to select crop area
-                            </p>
-                          )}
-                        </div>
                       </div>
                     ) : (
                       <div className="space-y-4 py-4">
-                        <div className="bg-gradient-to-br from-orange-500/20 to-pink-500/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto border border-orange-500/20">
-                          <Upload className="w-8 h-8 text-orange-400" />
+                        <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto border border-blue-500/20">
+                          <Upload className="w-8 h-8 text-blue-400" />
                         </div>
                         <div>
                           <p className="text-lg font-medium text-white">
@@ -641,7 +431,7 @@ export default function TwitterHDRGenerator() {
                           min={1}
                           max={3}
                           step={0.05}
-                          className="[&_[role=slider]]:bg-orange-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-orange-300"
+                          className="[&_[role=slider]]:bg-blue-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-blue-300"
                         />
                         <p className="text-xs text-gray-500 mt-1.5">
                           Higher = brighter glow
@@ -661,7 +451,7 @@ export default function TwitterHDRGenerator() {
                           min={0.3}
                           max={1.5}
                           step={0.05}
-                          className="[&_[role=slider]]:bg-orange-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-orange-300"
+                          className="[&_[role=slider]]:bg-blue-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-blue-300"
                         />
                         <p className="text-xs text-gray-500 mt-1.5">
                           Lower = more intense highlights
@@ -674,7 +464,7 @@ export default function TwitterHDRGenerator() {
                   <Button
                     onClick={processImage}
                     disabled={!originalImage || isProcessing}
-                    className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 disabled:from-gray-600 disabled:to-gray-700 text-white py-6 text-lg rounded-xl shadow-lg shadow-orange-500/20"
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 disabled:from-gray-600 disabled:to-gray-700 text-white py-6 text-lg rounded-xl shadow-lg shadow-blue-500/20"
                   >
                     {isProcessing ? (
                       <>
@@ -684,7 +474,7 @@ export default function TwitterHDRGenerator() {
                     ) : (
                       <>
                         <Sparkles className="w-5 h-5 mr-2" />
-                        Create HDR Profile Picture
+                        Create HDR Photo
                       </>
                     )}
                   </Button>
@@ -704,22 +494,22 @@ export default function TwitterHDRGenerator() {
                     <div className="flex-1 flex items-center justify-center">
                       {processedImage ? (
                         <div className="w-full space-y-4">
-                          <TwitterProfileMockup
-                            profileImage={processedImage}
+                          <TwitterPostMockup
+                            postImage={processedImage}
                             hdrLevel={0}
                             compact
                           />
                           <p className="text-center text-sm text-gray-400">
-                            400 × 400px • Ready for Twitter/X
+                            Original size preserved • HDR ready
                           </p>
                         </div>
                       ) : (
                         <div className="text-center py-8">
-                          <div className="bg-gray-700/50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-600">
+                          <div className="bg-gray-700/50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-gray-600">
                             <Sparkles className="w-8 h-8 text-gray-500" />
                           </div>
                           <p className="text-gray-500">
-                            Upload a photo to see<br />your HDR profile picture
+                            Upload a photo to see<br />your HDR image
                           </p>
                         </div>
                       )}
@@ -733,27 +523,27 @@ export default function TwitterHDRGenerator() {
                       className="w-full bg-green-500 hover:bg-green-600 text-white py-6 text-lg rounded-xl shadow-lg shadow-green-500/20"
                     >
                       <Download className="w-5 h-5 mr-2" />
-                      Download Profile Picture
+                      Download HDR Photo
                     </Button>
                   )}
 
                   {/* Tips */}
-                  <div className="bg-gradient-to-br from-orange-500/10 to-pink-500/10 rounded-2xl p-5 sm:p-6 border border-orange-500/20">
+                  <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl p-5 sm:p-6 border border-blue-500/20">
                     <h4 className="font-semibold text-white mb-3">
                       Tips for best results
                     </h4>
                     <ul className="text-sm text-gray-400 space-y-2">
                       <li className="flex gap-2">
-                        <span className="text-orange-400 font-bold">•</span>
+                        <span className="text-blue-400 font-bold">•</span>
                         Works on iPhone, Mac, iPad, and HDR displays
                       </li>
                       <li className="flex gap-2">
-                        <span className="text-orange-400 font-bold">•</span>
+                        <span className="text-blue-400 font-bold">•</span>
                         Photos with bright colors work best
                       </li>
                       <li className="flex gap-2">
-                        <span className="text-orange-400 font-bold">•</span>
-                        Your profile will stand out in dark mode
+                        <span className="text-blue-400 font-bold">•</span>
+                        Sunsets, neon lights, and colorful scenes look amazing
                       </li>
                     </ul>
                   </div>
