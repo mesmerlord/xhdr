@@ -69,7 +69,7 @@ const Seo = ({
   title,
   description,
   url,
-  image = "/xhdr-og.png",
+  image = "https://xhdr.org/xhdr-og.png",
   siteName = DEFAULT_SITE_NAME,
   noIndex,
   openGraph,
