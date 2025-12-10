@@ -42,7 +42,7 @@ async function processImageWithHDR(
     // 6. 16-bit depth
     // 7. Assign Rec.2020 ICC profile
     // 8. Add alpha with slight transparency
-    const cmd = `magick "${inputPath}" -define quantum:format=floating-point -colorspace RGB -auto-gamma -evaluate Multiply ${settings.intensity} -evaluate Pow ${settings.gamma} -colorspace sRGB -depth 16 -profile "${iccPath}" \\( +clone -alpha extract -evaluate Multiply 0.996 \\) -alpha off -compose CopyOpacity -composite "${outputPath}"`;
+    const cmd = `convert "${inputPath}" -define quantum:format=floating-point -colorspace RGB -auto-gamma -evaluate Multiply ${settings.intensity} -evaluate Pow ${settings.gamma} -colorspace sRGB -depth 16 -profile "${iccPath}" \\( +clone -alpha extract -evaluate Multiply 0.996 \\) -alpha off -compose CopyOpacity -composite "${outputPath}"`;
 
     execSync(cmd, { stdio: "pipe" });
 
