@@ -33,7 +33,18 @@ export function HDRNavbar() {
                 : "text-gray-400 hover:text-blue-400"
             )}
           >
-            Photos & Posts
+            Photos
+          </Link>
+          <Link
+            href="/tools/hdr-video"
+            className={cn(
+              "transition-colors",
+              currentPath === "/tools/hdr-video"
+                ? "text-purple-400 font-medium"
+                : "text-gray-400 hover:text-purple-400"
+            )}
+          >
+            Videos
           </Link>
         </nav>
       </div>
