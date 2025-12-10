@@ -10,6 +10,8 @@ import {
   ChevronRight,
   Play,
   Video,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -27,6 +29,16 @@ function FacebookVideoMockup({
   videoSrc: string | null;
   hideOverlay?: boolean;
 }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
+
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-xl border border-gray-200 w-full">
       {/* Post header */}
@@ -52,13 +64,40 @@ function FacebookVideoMockup({
       )}
 
       {/* Video area - 4:3 aspect ratio */}
-      <div className="relative aspect-[4/3] bg-black">
+      <div className="relative aspect-[4/3] bg-black group">
         {videoSrc ? (
-          <video
-            src={videoSrc}
-            controls
-            className="w-full h-full object-contain"
-          />
+          <>
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-contain cursor-pointer"
+              onClick={toggleMute}
+            />
+            {/* Mute/Unmute indicator */}
+            <button
+              onClick={toggleMute}
+              className="absolute bottom-3 right-3 bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transition-all"
+            >
+              {isMuted ? (
+                <VolumeX className="w-5 h-5" />
+              ) : (
+                <Volume2 className="w-5 h-5" />
+              )}
+            </button>
+            {/* Click to unmute hint - shows briefly */}
+            {isMuted && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="bg-black/60 text-white px-4 py-2 rounded-full text-sm flex items-center gap-2">
+                  <VolumeX className="w-4 h-4" />
+                  Click to unmute
+                </div>
+              </div>
+            )}
+          </>
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-900 via-pink-900 to-orange-900">
             <div className="text-center">

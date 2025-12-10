@@ -57,13 +57,13 @@ async function processVideoWithHDR(
       "format=gbrpf32le",
       // Convert to BT.2020 with PQ (HDR10)
       "zscale=p=2020:t=smpte2084:m=2020_ncl:r=full",
-      // Saturation adjustment (now independent from brightness)
-      `vibrance=intensity=${-0.5 + (settings.saturation - 1) * 0.3}:alternate=0`,
-      `vibrance=intensity=${0.25 + (settings.saturation - 1) * 0.2}:alternate=1`,
-      // First curves: gamma, brightness, white level
-      `curves=all='0/0 0.1/${gamma.toFixed(2)} 0.3/${brightness.toFixed(2)} 0.75/${whiteLevel.toFixed(2)}'`,
-      // Second curves: black level, shadows, contrast
-      "curves=all='0/0 0.3/0.16 0.8/0.78 0.9/0.95 1/1'",
+      // Saturation adjustment - only apply if saturation != 1.0
+      settings.saturation !== 1.0 ? `vibrance=intensity=${-0.5 + (settings.saturation - 1) * 0.3}:alternate=0` : null,
+      settings.saturation !== 1.0 ? `vibrance=intensity=${0.25 + (settings.saturation - 1) * 0.2}:alternate=1` : null,
+      // First curves: gamma, brightness, white level (master = luminance only, no color shift)
+      `curves=master='0/0 0.1/${gamma.toFixed(2)} 0.3/${brightness.toFixed(2)} 0.75/${whiteLevel.toFixed(2)}'`,
+      // Second curves: black level, shadows, contrast (luminance only)
+      "curves=master='0/0 0.3/0.16 0.8/0.78 0.9/0.95 1/1'",
       // Final format
       "format=yuv420p10le",
     ].filter(Boolean).join(",");
