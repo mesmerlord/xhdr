@@ -404,7 +404,7 @@ export default function TwitterHDRGenerator() {
       <Seo
         title="HDR Profile Picture Generator for Twitter/X"
         description="Make your Twitter profile picture glow on HDR screens. Creates eye-catching profile photos that stand out in the feed."
-        image="/xhdr-og.png"
+        image="https://xhdr.org/xhdr-og.png"
       />
 
       <HDRNavbar />
