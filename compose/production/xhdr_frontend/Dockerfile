@@ -32,7 +32,7 @@ FROM base AS runner
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    wget curl imagemagick \
+    wget curl imagemagick ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Don't run production as root
