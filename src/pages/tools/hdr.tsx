@@ -125,6 +125,7 @@ export default function HDRGenerator() {
   // HDR settings
   const [hdrIntensity, setHdrIntensity] = useState(1.5);
   const [gamma, setGamma] = useState(0.4);
+  const [optimizeForTwitter, setOptimizeForTwitter] = useState(true); // Helps Twitter preserve HDR
 
   const scrollToUpload = () => {
     uploadSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -185,6 +186,8 @@ export default function HDRGenerator() {
           settings: {
             hdrIntensity,
             gamma,
+            // Twitter seems to strip HDR from large images - constraining to 4096px helps
+            maxDimension: optimizeForTwitter ? 4096 : undefined,
           },
         }),
       });
@@ -208,7 +211,7 @@ export default function HDRGenerator() {
 
     const link = document.createElement("a");
     link.href = processedImage;
-    link.download = "hdr-image.png";
+    link.download = "hdr-image.jpg";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -456,6 +459,22 @@ export default function HDRGenerator() {
                         <p className="text-xs text-gray-500 mt-1.5">
                           Lower = more intense highlights
                         </p>
+                      </div>
+
+                      {/* Twitter optimization toggle */}
+                      <div className="pt-2 border-t border-gray-700">
+                        <label className="flex items-center gap-3 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={optimizeForTwitter}
+                            onChange={(e) => setOptimizeForTwitter(e.target.checked)}
+                            className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500 focus:ring-offset-gray-800"
+                          />
+                          <div>
+                            <span className="text-sm font-medium text-gray-300">Optimize for Twitter</span>
+                            <p className="text-xs text-gray-500">Constrains size to help Twitter preserve HDR effect</p>
+                          </div>
+                        </label>
                       </div>
                     </div>
                   </div>

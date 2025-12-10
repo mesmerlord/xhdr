@@ -58,7 +58,11 @@ async function processImageWithHDR(
   const minDim = Math.min(width, height);
 
   // Calculate crop position based on user selection
-  const { left, top } = calculateCropPosition(width, height, settings.cropOffset);
+  const { left, top } = calculateCropPosition(
+    width,
+    height,
+    settings.cropOffset
+  );
 
   const resizedBuffer = await sharp(inputBuffer)
     .extract({
@@ -90,8 +94,8 @@ async function processImageWithHDR(
     // 5. Back to sRGB
     // 6. 16-bit depth
     // 7. Assign Rec.2020 ICC profile
-    // 8. Add alpha with slight transparency
-    const cmd = `convert "${inputPath}" -define quantum:format=floating-point -colorspace RGB -auto-gamma -evaluate Multiply ${settings.intensity} -evaluate Pow ${settings.gamma} -colorspace sRGB -depth 16 -profile "${iccPath}" \\( +clone -alpha extract -evaluate Multiply 0.996 \\) -alpha off -compose CopyOpacity -composite "${outputPath}"`;
+    // 8. Add alpha channel with slight transparency (99.6% opaque) to force Twitter to keep PNG
+    const cmd = `convert "${inputPath}" -define quantum:format=floating-point -colorspace RGB -auto-gamma -evaluate Multiply ${settings.intensity} -evaluate Pow ${settings.gamma} -colorspace sRGB -depth 16 -profile "${iccPath}" -alpha on -channel A -evaluate set 99.6% +channel "${outputPath}"`;
 
     execSync(cmd, { stdio: "pipe" });
 
