@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api
+
+Sitemap: https://admakeai.com/api/sitemap.xml
+Sitemap: https://admakeai.com/api/sitemap-content.xml

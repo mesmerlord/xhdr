@@ -1,0 +1,26 @@
+version: "3"
+
+networks:
+  traefik_network:
+    external: true
+    name: admakeai_traefik_network
+
+services:
+  xhdr_frontend: &xhdr_frontend
+    image: production_xhdr_frontend
+    build:
+      context: .
+      dockerfile: ./compose/production/xhdr_frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_CURRENT_SITE: xhdr.org
+
+    restart: on-failure
+
+    deploy:
+      replicas: 1
+    env_file:
+      - ./.env.production
+    environment:
+      - NEXT_PUBLIC_CURRENT_SITE=xhdr.org
+    networks:
+      - traefik_network
