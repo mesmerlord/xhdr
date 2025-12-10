@@ -6,9 +6,7 @@ import {
   X,
   Heart,
   MessageCircle,
-  Repeat2,
   Share,
-  MoreHorizontal,
   ChevronRight,
   Play,
   Video,
@@ -21,121 +19,81 @@ import { Footer } from "@/components/Footer";
 import { HDRNavbar } from "@/components/HDRNavbar";
 import { cn } from "@/lib/utils";
 
-// Twitter Video Post Mockup Component
-function TwitterVideoMockup({
+// Facebook Video Post Mockup Component
+function FacebookVideoMockup({
   videoSrc,
-  compact = false,
+  hideOverlay = false,
 }: {
   videoSrc: string | null;
-  compact?: boolean;
+  hideOverlay?: boolean;
 }) {
   return (
-    <div
-      className={cn(
-        "bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-200",
-        compact && "scale-[0.97] origin-top"
-      )}
-    >
+    <div className="bg-white rounded-xl overflow-hidden shadow-xl border border-gray-200 w-full">
       {/* Post header */}
-      <div
-        className={cn(
-          "flex items-start gap-2 sm:gap-3",
-          compact ? "p-3" : "p-3 sm:p-4"
-        )}
-      >
-        <div
-          className={cn(
-            "rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex-shrink-0",
-            compact ? "w-8 h-8" : "w-9 h-9 sm:w-10 sm:h-10"
-          )}
-        />
-        <div className="flex-1 min-w-0">
-          <div
-            className={cn(
-              "flex items-center gap-1 flex-wrap",
-              compact ? "text-xs" : "text-xs sm:text-sm"
-            )}
-          >
-            <span className="font-bold text-gray-900">Your Name</span>
-            <span className="text-gray-500">@username</span>
-            <span className="text-gray-400">·</span>
-            <span className="text-gray-500">1h</span>
-          </div>
-          <p
-            className={cn(
-              "text-gray-900 mt-0.5 sm:mt-1",
-              compact ? "text-xs" : "text-xs sm:text-sm"
-            )}
-          >
-            Check out this HDR video! It glows on HDR screens.
-          </p>
-        </div>
-        <button className="text-gray-400 hover:text-gray-600 flex-shrink-0">
-          <MoreHorizontal
-            className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")}
-          />
-        </button>
-      </div>
-
-      {/* Video area */}
-      <div className={cn("pb-2 sm:pb-3", compact ? "px-3" : "px-3 sm:px-4")}>
-        <div className="rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200 bg-black relative">
-          {videoSrc ? (
-            <video
-              src={videoSrc}
-              controls
-              className="w-full"
-              style={{ maxHeight: compact ? "250px" : "350px" }}
-            />
-          ) : (
-            <div
-              className="flex items-center justify-center bg-gradient-to-br from-purple-900 to-pink-900"
-              style={{ height: compact ? "200px" : "280px" }}
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-3">
-                  <Play className="w-8 h-8 text-white ml-1" />
-                </div>
-                <p className="text-white/70 text-sm">Your HDR video here</p>
-              </div>
+      {!hideOverlay && (
+        <div className="p-3 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
+          <div className="flex-1">
+            <div className="font-semibold text-gray-900 text-sm">Your Name</div>
+            <div className="text-xs text-gray-500 flex items-center gap-1">
+              <span>Just now</span>
+              <span>·</span>
+              <span>🌐</span>
             </div>
-          )}
+          </div>
         </div>
+      )}
+
+      {/* Post text */}
+      {!hideOverlay && (
+        <div className="px-3 pb-2">
+          <p className="text-gray-900 text-sm">Check out this HDR video! ✨</p>
+        </div>
+      )}
+
+      {/* Video area - 4:3 aspect ratio */}
+      <div className="relative aspect-[4/3] bg-black">
+        {videoSrc ? (
+          <video
+            src={videoSrc}
+            controls
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-900 via-pink-900 to-orange-900">
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-3">
+                <Play className="w-8 h-8 text-white ml-1" />
+              </div>
+              <p className="text-white/70 text-sm">Your HDR video here</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Post actions */}
-      <div
-        className={cn(
-          "flex justify-between text-gray-500",
-          compact
-            ? "px-3 pb-3 text-xs"
-            : "px-3 sm:px-4 pb-3 sm:pb-4 text-xs sm:text-sm"
-        )}
-      >
-        <button className="flex items-center gap-1 sm:gap-2 hover:text-blue-500 transition-colors">
-          <MessageCircle
-            className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")}
-          />
-          <span>42</span>
-        </button>
-        <button className="flex items-center gap-1 sm:gap-2 hover:text-green-500 transition-colors">
-          <Repeat2
-            className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")}
-          />
-          <span>28</span>
-        </button>
-        <button className="flex items-center gap-1 sm:gap-2 hover:text-pink-500 transition-colors">
-          <Heart
-            className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")}
-          />
-          <span>892</span>
-        </button>
-        <button className="flex items-center gap-1 sm:gap-2 hover:text-blue-500 transition-colors">
-          <Share
-            className={cn(compact ? "w-4 h-4" : "w-4 h-4 sm:w-5 sm:h-5")}
-          />
-        </button>
-      </div>
+      {!hideOverlay && (
+        <div className="p-3 border-t border-gray-100">
+          <div className="flex justify-between text-gray-500 text-sm mb-2">
+            <span>❤️ 1.2K</span>
+            <span>48 comments · 12 shares</span>
+          </div>
+          <div className="flex justify-around border-t border-gray-100 pt-2">
+            <button className="flex items-center gap-2 text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-lg">
+              <Heart className="w-5 h-5" />
+              <span>Like</span>
+            </button>
+            <button className="flex items-center gap-2 text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-lg">
+              <MessageCircle className="w-5 h-5" />
+              <span>Comment</span>
+            </button>
+            <button className="flex items-center gap-2 text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-lg">
+              <Share className="w-5 h-5" />
+              <span>Share</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -152,6 +110,7 @@ export default function HDRVideoGenerator() {
 
   // HDR settings
   const [intensity, setIntensity] = useState(1.5);
+  const [saturation, setSaturation] = useState(1.0);
 
   const scrollToUpload = () => {
     uploadSectionRef.current?.scrollIntoView({
@@ -215,6 +174,7 @@ export default function HDRVideoGenerator() {
           video: originalVideo,
           settings: {
             intensity,
+            saturation,
           },
         }),
       });
@@ -235,15 +195,27 @@ export default function HDRVideoGenerator() {
     }
   };
 
-  const downloadVideo = () => {
+  const downloadVideo = async () => {
     if (!processedVideo) return;
 
-    const link = document.createElement("a");
-    link.href = processedVideo;
-    link.download = "hdr-video.mp4";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // Fetch the video from CDN and create a blob for download
+      const response = await fetch(processedVideo);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "hdr-video.mp4";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+    } catch {
+      // Fallback to direct link if fetch fails
+      window.open(processedVideo, "_blank");
+    }
   };
 
   const resetAll = () => {
@@ -252,6 +224,7 @@ export default function HDRVideoGenerator() {
     setError(null);
     setProgress(null);
     setIntensity(1.5);
+    setSaturation(1.0);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -260,8 +233,8 @@ export default function HDRVideoGenerator() {
   return (
     <>
       <Seo
-        title="HDR Video Generator for Twitter/X"
-        description="Make your Twitter videos glow on HDR screens. Create eye-catching video posts that stand out in the feed."
+        title="HDR Video Generator for Instagram & Facebook"
+        description="Make your Instagram Reels and Facebook videos glow on HDR screens. Create eye-catching content that stands out."
       />
 
       <HDRNavbar />
@@ -293,8 +266,8 @@ export default function HDRVideoGenerator() {
                   </h1>
 
                   <p className="text-base sm:text-lg text-gray-300 mb-6 max-w-xl mx-auto lg:mx-0">
-                    Add HDR effects to your videos. They&apos;ll shine brighter
-                    than regular videos on HDR displays like iPhones and Macs.
+                    Add HDR effects to your videos for Instagram Reels and Facebook.
+                    They&apos;ll shine brighter on HDR displays like iPhones and Macs.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
@@ -311,7 +284,7 @@ export default function HDRVideoGenerator() {
 
                   {/* Feature pills */}
                   <div className="hidden sm:flex flex-wrap gap-2 justify-center lg:justify-start">
-                    {["Works on iPhone", "HDR10 metadata", "Instant download"].map(
+                    {["Instagram Reels", "Facebook Video", "HDR10 format"].map(
                       (feature) => (
                         <span
                           key={feature}
@@ -331,7 +304,7 @@ export default function HDRVideoGenerator() {
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-pink-500/30 blur-2xl scale-110" />
 
                     <div className="relative">
-                      <TwitterVideoMockup videoSrc={null} compact />
+                      <FacebookVideoMockup videoSrc="/hdr-video-demo.mp4" />
                     </div>
                   </div>
                 </div>
@@ -350,7 +323,7 @@ export default function HDRVideoGenerator() {
                   Create Your HDR Video
                 </h2>
                 <p className="text-gray-400">
-                  Upload any video and we&apos;ll add the HDR magic
+                  Upload any video for Instagram Reels or Facebook
                 </p>
               </div>
 
@@ -440,12 +413,34 @@ export default function HDRVideoGenerator() {
                           value={[intensity]}
                           onValueChange={([v]) => setIntensity(v)}
                           min={1}
-                          max={2.5}
-                          step={0.05}
+                          max={4}
+                          step={0.1}
                           className="[&_[role=slider]]:bg-purple-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-purple-300"
                         />
                         <p className="text-xs text-gray-500 mt-1.5">
                           Higher = brighter glow effect
+                        </p>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <Label className="text-sm font-medium text-gray-300">
+                            Saturation
+                          </Label>
+                          <span className="text-sm text-gray-400 font-mono">
+                            {saturation.toFixed(2)}x
+                          </span>
+                        </div>
+                        <Slider
+                          value={[saturation]}
+                          onValueChange={([v]) => setSaturation(v)}
+                          min={0.5}
+                          max={2}
+                          step={0.05}
+                          className="[&_[role=slider]]:bg-purple-500 [&_[role=slider]]:border-2 [&_[role=slider]]:border-purple-300"
+                        />
+                        <p className="text-xs text-gray-500 mt-1.5">
+                          Adjust color intensity separately
                         </p>
                       </div>
                     </div>
@@ -493,7 +488,7 @@ export default function HDRVideoGenerator() {
                     <div className="flex-1 flex items-center justify-center">
                       {processedVideo ? (
                         <div className="w-full space-y-4">
-                          <TwitterVideoMockup videoSrc={processedVideo} compact />
+                          <FacebookVideoMockup videoSrc={processedVideo} hideOverlay />
                           <p className="text-center text-sm text-gray-400">
                             HDR10 metadata embedded
                           </p>
@@ -532,15 +527,15 @@ export default function HDRVideoGenerator() {
                     <ul className="text-sm text-gray-400 space-y-2">
                       <li className="flex gap-2">
                         <span className="text-purple-400 font-bold">•</span>
-                        Works on iPhone, Mac, iPad, and HDR TVs
+                        Upload to Instagram Reels or Facebook for HDR playback
                       </li>
                       <li className="flex gap-2">
                         <span className="text-purple-400 font-bold">•</span>
-                        Short clips (under 30 seconds) process fastest
+                        Viewers on iPhone/iPad will see the HDR glow effect
                       </li>
                       <li className="flex gap-2">
                         <span className="text-purple-400 font-bold">•</span>
-                        Videos with bright scenes look most impressive
+                        Videos with bright scenes and colors work best
                       </li>
                     </ul>
                   </div>

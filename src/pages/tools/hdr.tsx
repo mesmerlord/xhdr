@@ -206,15 +206,25 @@ export default function HDRGenerator() {
     }
   };
 
-  const downloadImage = () => {
+  const downloadImage = async () => {
     if (!processedImage) return;
 
-    const link = document.createElement("a");
-    link.href = processedImage;
-    link.download = "hdr-image.jpg";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // Fetch from CDN URL and create blob for download
+      const response = await fetch(processedImage);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "hdr-image.jpg";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch {
+      // Fallback: open in new tab
+      window.open(processedImage, "_blank");
+    }
   };
 
   const resetAll = () => {

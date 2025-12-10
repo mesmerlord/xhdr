@@ -4,6 +4,7 @@ import { writeFileSync, readFileSync, unlinkSync } from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import { randomUUID } from "crypto";
+import { uploadToR2 } from "@/server/utils/r2";
 
 interface HDRSettings {
   intensity: number;
@@ -102,17 +103,23 @@ export default async function handler(
       maxDimension: settings?.maxDimension ?? 1080, // Default cap to help Twitter preserve HDR
     };
 
-    // Extract base64 data
-    const base64Match = image.match(/^data:image\/\w+;base64,(.+)$/);
-    if (!base64Match) {
+    // Extract base64 data - use indexOf instead of regex to avoid stack overflow on large strings
+    const base64Prefix = "base64,";
+    const base64Index = image.indexOf(base64Prefix);
+    if (base64Index === -1 || !image.startsWith("data:image/")) {
       return res.status(400).json({ error: "Invalid image format" });
     }
 
-    const imageBuffer = Buffer.from(base64Match[1], "base64");
+    const base64Data = image.slice(base64Index + base64Prefix.length);
+    const imageBuffer = Buffer.from(base64Data, "base64");
     const processedBuffer = await processImageWithHDR(imageBuffer, hdrSettings);
-    const base64Output = `data:image/jpeg;base64,${processedBuffer.toString("base64")}`;
 
-    return res.status(200).json({ image: base64Output });
+    // Upload to R2 and return CDN URL
+    const imageId = randomUUID();
+    const key = `uploads/images/${imageId}.jpg`;
+    const cdnUrl = await uploadToR2(processedBuffer, key, "image/jpeg");
+
+    return res.status(200).json({ image: cdnUrl });
   } catch (error) {
     console.error("HDR processing error:", error);
     return res.status(500).json({
