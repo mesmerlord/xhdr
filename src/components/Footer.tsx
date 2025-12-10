@@ -30,7 +30,23 @@ export function Footer() {
                   href="/tools/twitter-hdr"
                   className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
                 >
-                  Twitter HDR Generator
+                  Profile Picture HDR
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/hdr"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  Photo HDR
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/hdr-video"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  Video HDR
                 </Link>
               </li>
             </ul>
