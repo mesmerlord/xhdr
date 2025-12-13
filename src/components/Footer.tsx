@@ -19,7 +19,7 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Links */}
+          {/* Tools */}
           <div className="space-y-4">
             <h3 className="font-semibold text-white text-sm uppercase tracking-wider">
               Tools
@@ -47,6 +47,55 @@ export function Footer() {
                   className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   Video HDR
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Learn */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-white text-sm uppercase tracking-wider">
+              Learn
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blog/what-is-hdr-profile-picture"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  What is HDR?
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blog/twitter-profile-picture-tips"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  Profile Picture Tips
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blog/hdr-effect-explained"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  HDR Effect Explained
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blog/hdr-ads-instagram-facebook"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  HDR for Instagram/Facebook
                 </Link>
               </li>
             </ul>

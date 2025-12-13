@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { BLOG_POSTS } from "@/lib/blogData";
 
 const WEBSITE_URL = process.env.PUBLIC_URL || "https://xhdr.org";
 
@@ -54,6 +55,16 @@ async function generateSiteMap() {
   );
   urls.push(createSitemapUrl("/tools/hdr", "weekly", 0.9, lastModified));
   urls.push(createSitemapUrl("/tools/hdr-video", "weekly", 0.9, lastModified));
+
+  // Blog index
+  urls.push(createSitemapUrl("/blog", "weekly", 0.8, lastModified));
+
+  // Blog posts (dynamically from blogData)
+  BLOG_POSTS.forEach((post) => {
+    urls.push(
+      createSitemapUrl(`/blog/${post.slug}`, "monthly", 0.7, post.date)
+    );
+  });
 
   // Generate XML
   const urlsXml = urls.map(generateUrlXml).join("");

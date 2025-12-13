@@ -152,3 +152,38 @@ See `.env.example` for all required variables:
 - `RUNWARE_API_KEY` - Runware API key
 - `RESEND_API_KEY` - Email API key
 - `SENTRY_DSN` - Error tracking
+
+## Blog Posts
+
+### Structure
+- Blog pages in `/src/pages/blog/`
+- Use `BlogLayout` component from `/src/components/layout/BlogLayout.tsx`
+- Blog data in `/src/lib/blogData.ts` - add new posts here for the index page
+- Hero images in `/public/blog-images/`
+- Example profile pictures in `/public/example-profiles/`
+
+### Hero Images
+Every blog post MUST have a hero image generated with Z-Image Turbo (`fal-ai/z-image/turbo`).
+
+**Important constraints for Z-Image Turbo:**
+- Use simplistic, graphic designs - NOT photorealistic scenes
+- Good: abstract gradients, tech infographic style, minimal geometric shapes
+- Bad: complex realistic scenes, multiple people, detailed environments
+- Size: 1280×720 for hero images, 512×512 for profile pictures
+- When generating people: ALWAYS specify race/ethnicity to avoid generic outputs
+
+Generate hero images with: `npx tsx scripts/generate-blog-heroes.ts`
+
+### Example prompts that work well:
+```
+"Minimalist graphic design showing a glowing circular profile picture frame with orange and pink gradient rim light against dark gray background, abstract light rays emanating outward, clean modern tech aesthetic, wide banner format"
+
+"Split comparison graphic showing same circular portrait silhouette, left side dim and flat labeled 'SDR', right side glowing bright with orange highlights labeled 'HDR', dark background with subtle gradient, tech infographic style"
+```
+
+### Creating New Blog Posts
+1. Add entry to `/src/lib/blogData.ts`
+2. Create page in `/src/pages/blog/[slug].tsx`
+3. Use `BlogLayout` with POST_DATA object containing: title, description, date, readTime, category, image
+4. Generate hero image using the script or add to script and run
+5. Update Footer if needed
