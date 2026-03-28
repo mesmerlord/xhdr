@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
-import { Menu, X, Image, User, Video } from "lucide-react";
+import { Menu, X, Image, User, Video, ExternalLink } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
@@ -132,6 +132,25 @@ export function HDRNavbar() {
                       </Link>
                     );
                   })}
+
+                  {/* External Links */}
+                  <div className="pt-4 mt-4 border-t border-white/10">
+                    <a
+                      href="https://mesmer.tools"
+                      target="_blank"
+                      rel="noopener"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 p-4 rounded-xl transition-all hover:bg-white/5"
+                    >
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br from-amber-500 to-orange-600">
+                        <ExternalLink className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-medium text-white">More AI Tools</div>
+                        <div className="text-xs text-gray-500">mesmer.tools</div>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </SheetContent>

@@ -100,6 +100,25 @@ export function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Resources */}
+          <div className="space-y-4">
+            <h3 className="font-semibold text-white text-sm uppercase tracking-wider">
+              Resources
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="https://mesmer.tools"
+                  target="_blank"
+                  rel="noopener"
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  More AI Tools
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom footer */}
